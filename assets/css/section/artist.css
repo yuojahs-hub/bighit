@@ -1,0 +1,643 @@
+:root {
+    --mainEng-font: "Pretendard";
+    --mainKor-font: "Pretendard";
+}
+
+body {
+    background-color: #000;
+}
+
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+strong {
+    color: #fff;
+}
+
+a {
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: var(--subColor600);
+}
+
+/* banner */
+#banner {
+    width: 100%;
+    height: 37.5rem;
+    position: relative;
+}
+
+.logo_gif {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo_gif img {
+    width: 650px;
+    display: block;
+    height: auto;
+}
+/* //banner */
+
+/* text_track */
+#text_track {
+    width: 100%;
+    overflow: hidden;
+    background: #747fc3;
+    padding: 0;
+}
+
+.banner_track01 {
+    display: flex;
+    width: max-content;
+    animation: text01 80s linear infinite;
+    background-color: var(--mainBg100);
+}
+
+.banner_track01 .banner_group01 {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 3.75rem;
+    padding-right: 3.75rem;
+}
+
+.banner_group01 span {
+    white-space: nowrap;
+    flex-shrink: 0;
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+@keyframes text01 {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+.banner_track02 {
+    display: flex;
+    width: max-content;
+    animation: text02 80s linear infinite;
+    background-color: var(--mainBg100);
+}
+
+.banner_track02 .banner_group02 {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 3.75rem;
+    padding-right: 3.75rem;
+}
+
+.banner_group02 span {
+    white-space: nowrap;
+    flex-shrink: 0;
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+@keyframes text02 {
+    from {
+        transform: translateX(-50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+/* //text_track */
+
+/* text_title */
+#text_title {
+    width: 100%;
+}
+.text {
+    flex-direction: column;
+    padding-top: 150px;
+}
+.text h1 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+}
+/* //text_title */
+
+/* main */
+#main {
+    width: 100%;
+}
+.main_text {
+    width: 75%;
+    margin: 0 auto;
+    padding-top: 170px;
+}
+
+/* 기본 상태: span들이 왼쪽에 붙음 */
+.main_text .group {
+    display: flex;
+}
+
+/* span */
+.main_text .group span {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+/* show 추가 시: span들이 좌우로 벌어짐 */
+.main_text.show .group {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* em 기본 상태 */
+.main_text .group span em {
+    background: linear-gradient(var(--mainBg), var(--mainBg)) no-repeat left center;
+
+    background-size: 0% 100%;
+    transition: background-size 0.8s ease-in-out;
+}
+
+/* em 배경 확장 */
+.main_text.show .group span em {
+    background-size: 100% 100%;
+}
+
+.sub_title {
+    text-align: center;
+    padding-top: 95px;
+}
+.sub_title h3 {
+    font-size: 18px;
+    font-weight: 400;
+    word-break: keep-all;
+}
+/* //main */
+
+/* slider */
+#slider {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+}
+
+.slider_inner {
+    display: flex;
+    width: max-content;
+    padding: 0;
+    gap: 50px;
+}
+
+/* 공통 카드 */
+.slider_inner .slide_item {
+    width: 760px;
+    height: 350px;
+    flex-shrink: 0;
+
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* 그룹 이미지 공통 */
+.slider_inner .slide_item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* BTS 배경 이미지 */
+.slider_inner .aLogo01::before {
+    background-image: url("../../img/bts/member/btsAll.webp");
+}
+
+/* TXT 배경 이미지 */
+.slider_inner .aLogo02::before {
+    background-image: url("../../img/txt/member/txt.jpg");
+}
+
+/* CORTIS 배경 이미지 */
+.slider_inner .aLogo03::before {
+    background-image: url("../../img/cortis/member/cortisAll.png");
+}
+
+/* 로고 공통 */
+.slider_inner .slide_item img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* 로고 개별 크기 */
+.slider_inner .bLogo {
+    width: 60px;
+}
+
+.slider_inner .tLogo {
+    width: 200px;
+}
+
+.slider_inner .cLogo {
+    width: 200px;
+}
+
+/* 로고 사라짐 */
+.slider_inner .slide_item:hover img {
+    opacity: 0;
+}
+
+/* 그룹 이미지 나타남 */
+.slider_inner .slide_item:hover::before {
+    opacity: 1;
+}
+/* slider */
+
+/* 반응형 공통 설정 */
+/* GIF가 부모 영역 밖으로 넘치지 않도록 */
+.logo_gif {
+    max-width: 100%;
+}
+
+.logo_gif img {
+    max-width: 100%;
+}
+
+/* 서브 타이틀 */
+.sub_title h3 {
+    line-height: 1.6;
+}
+
+/* 카드 크기 유지 */
+.slider_inner .slide_item {
+    flex-shrink: 0;
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 1600px) {
+    #banner {
+        height: 550px;
+    }
+
+    .logo_gif img {
+        width: 600px;
+    }
+
+    .text {
+        padding-top: 135px;
+    }
+
+    .text h1 {
+        font-size: 34px;
+    }
+
+    .main_text {
+        width: auto;
+        margin: 0 80px;
+        padding-top: 150px;
+    }
+
+    .main_text .group span {
+        font-size: 34px;
+    }
+
+    .slider_inner {
+        gap: 45px;
+    }
+
+    .slider_inner .slide_item {
+        width: 700px;
+        height: 330px;
+    }
+}
+@media (max-width: 1440px) {
+    #banner {
+        height: 500px;
+    }
+
+    .logo_gif img {
+        width: 550px;
+    }
+
+    .text {
+        padding-top: 120px;
+    }
+
+    .text h1 {
+        font-size: 30px;
+    }
+
+    .main_text {
+        margin: 0 60px;
+        padding-top: 130px;
+    }
+
+    .main_text .group span {
+        font-size: 30px;
+    }
+
+    .sub_title {
+        padding-top: 80px;
+    }
+
+    .sub_title h3 {
+        font-size: 17px;
+    }
+
+    .slider_inner {
+        gap: 40px;
+    }
+
+    .slider_inner .slide_item {
+        width: 620px;
+        height: 310px;
+    }
+
+    .slider_inner .bLogo {
+        width: 55px;
+    }
+
+    .slider_inner .tLogo,
+    .slider_inner .cLogo {
+        width: 180px;
+    }
+}
+@media (max-width: 1200px) {
+    #banner {
+        height: 460px;
+    }
+
+    .logo_gif img {
+        width: 500px;
+    }
+
+    .text {
+        padding-top: 105px;
+    }
+
+    .text h1 {
+        font-size: 27px;
+    }
+
+    .main_text {
+        margin: 0 45px;
+        padding-top: 115px;
+    }
+
+    .main_text .group span {
+        font-size: 25px;
+    }
+
+    .slider_inner {
+        gap: 35px;
+    }
+
+    .slider_inner .slide_item {
+        width: 550px;
+        height: 290px;
+    }
+}
+@media (max-width: 1024px) {
+    #banner {
+        height: 420px;
+    }
+
+    .logo_gif img {
+        width: 450px;
+    }
+
+    .banner_group01 span,
+    .banner_group02 span {
+        font-size: 16px;
+    }
+
+    .banner_track01 .banner_group01,
+    .banner_track02 .banner_group02 {
+        gap: 45px;
+        padding-right: 45px;
+    }
+
+    .text {
+        padding-top: 150px;
+    }
+
+    .text h1 {
+        font-size: 25px;
+    }
+
+    .main_text {
+        margin: 0 35px;
+        padding-top: 200px;
+    }
+
+    .main_text .group span {
+        font-size: 20px;
+        white-space: normal;
+    }
+
+    .sub_title {
+        padding: 65px 30px 0;
+    }
+
+    .sub_title h3 {
+        font-size: 16px;
+    }
+
+    .slider_inner {
+        gap: 30px;
+    }
+
+    .slider_inner .slide_item {
+        width: 500px;
+        height: 280px;
+    }
+
+    .slider_inner .bLogo {
+        width: 48px;
+    }
+
+    .slider_inner .tLogo,
+    .slider_inner .cLogo {
+        width: 160px;
+    }
+}
+@media (max-width: 900px) {
+    .main_text {
+        margin: 0 28px;
+    }
+
+    .main_text .group span {
+        font-size: 18px;
+    }
+
+    .slider_inner .slide_item {
+        width: 450px;
+        height: 260px;
+    }
+}
+@media (max-width: 768px) {
+    #banner {
+        height: 350px;
+    }
+
+    .logo_gif img {
+        width: 400px;
+    }
+
+    .banner_group01 span,
+    .banner_group02 span {
+        font-size: 14px;
+    }
+
+    .banner_track01 .banner_group01,
+    .banner_track02 .banner_group02 {
+        gap: 30px;
+        padding-right: 30px;
+    }
+
+    .text {
+        padding-top: 140px;
+    }
+
+    .text h1 {
+        font-size: 22px;
+    }
+
+    .main_text {
+        margin: 0 24px;
+        padding-top: 220px;
+    }
+
+    .main_text .group span {
+        font-size: 17px;
+        line-height: 1.5;
+    }
+
+    .sub_title {
+        padding: 50px 24px;
+    }
+
+    .sub_title h3 {
+        font-size: 13px;
+    }
+
+    .slider_inner {
+        gap: 24px;
+    }
+
+    .slider_inner .slide_item {
+        width: 400px;
+        height: 240px;
+    }
+
+    .slider_inner .bLogo {
+        width: 42px;
+    }
+
+    .slider_inner .tLogo,
+    .slider_inner .cLogo {
+        width: 135px;
+    }
+}
+@media (max-width: 600px) {
+    #banner {
+        height: 310px;
+    }
+
+    .logo_gif img {
+        width: 220px;
+    }
+
+    .text h1 {
+        font-size: 20px;
+    }
+
+    .main_text {
+        margin: 0 20px;
+        padding-top: 60px;
+    }
+
+    .main_text .group span {
+        font-size: 15px;
+    }
+
+    .sub_title h3 {
+        font-size: 12px;
+    }
+
+    .slider_inner {
+        gap: 20px;
+    }
+
+    .slider_inner .slide_item {
+        width: 340px;
+        height: 220px;
+    }
+}
+@media (max-width: 480px) {
+    #banner {
+        height: 260px;
+    }
+
+    .logo_gif img {
+        width: 180px;
+    }
+
+    .banner_group01 span,
+    .banner_group02 span {
+        font-size: 12px;
+    }
+
+    .banner_track01 .banner_group01,
+    .banner_track02 .banner_group02 {
+        gap: 20px;
+        padding-right: 20px;
+    }
+
+    #text_title {
+        display: none;
+    }
+
+    #main {
+        display: none;
+    }
+
+    #slider {
+        flex-direction: column;
+    }
+
+    .slider_inner {
+        flex-direction: column;
+        padding-top: 65px;
+    }
+}

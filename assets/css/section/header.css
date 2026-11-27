@@ -1,0 +1,562 @@
+/* header */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+
+    background: transparent;
+    mix-blend-mode: difference;
+}
+
+#header .header_inner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* 헤더 로고 */
+#header .header_logo {
+    flex-shrink: 0;
+}
+
+#header .header_logo h1 {
+    margin: 0;
+    padding: 0;
+}
+
+#header .header_logo a {
+    display: block;
+}
+
+#header .header_logo a svg {
+    width: clamp(65px, 5.8333vw, 112px);
+    height: auto;
+    display: block;
+}
+
+#header .header_logo a svg path {
+    fill: #fff;
+}
+
+/* PC 내비게이션 */
+#header .header_nav {
+    display: block;
+}
+
+#header .header_menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#header .header_menu > li {
+    position: relative;
+}
+
+#header .header_menu > li > a {
+    display: inline-block;
+    position: relative;
+    font-size: 14px;
+    padding: 14px;
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* PC 메뉴 호버 밑줄 */
+#header .header_menu > li > a::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    bottom: 0;
+
+    width: calc(100% - 28px);
+    height: 1px;
+    background-color: #fff;
+
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+#header .header_menu > li:hover > a::before,
+#header .header_menu > li:focus-within > a::before {
+    transform: scaleX(1);
+}
+
+/* PC 아티스트 서브 메뉴 */
+#header .header_submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    list-style: none;
+    margin: 0;
+    padding: 10px 0 0;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translateY(-8px);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        visibility 0.3s;
+}
+
+#header .header_submenu li a {
+    display: block;
+    padding: 10px 14px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+
+    transition: opacity 0.3s ease;
+}
+
+/* PC OUR ARTIST 호버 */
+#header .has_submenu:hover .header_submenu,
+#header .has_submenu:focus-within .header_submenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+#header .header_submenu li a:hover {
+    opacity: 0.5;
+}
+
+/* 모바일 햄버거 버튼 */
+#header .header_nav_mobile {
+    display: none;
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+
+    pointer-events: auto;
+    touch-action: manipulation;
+    cursor: pointer;
+
+    z-index: 1002;
+}
+
+#header .header_nav_mobile span {
+    display: block;
+    position: relative;
+
+    width: 40px;
+    height: 2px;
+    background: #fff;
+
+    pointer-events: none;
+}
+
+#header .header_nav_mobile span::before,
+#header .header_nav_mobile span::after {
+    content: "";
+    position: absolute;
+
+    width: 40px;
+    height: 2px;
+    background: #fff;
+
+    pointer-events: none;
+    transition: width 0.3s ease;
+}
+
+#header .header_nav_mobile span::before {
+    top: -6px;
+    left: 0;
+}
+
+#header .header_nav_mobile span::after {
+    bottom: -6px;
+    right: 0;
+}
+
+/* 키보드 포커스 */
+#header .header_nav_mobile:focus-visible {
+    outline: 1px solid #fff;
+    outline-offset: 4px;
+}
+
+/* 모바일 메뉴 등장 효과 */
+@keyframes mobileMenuFade {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 모바일 메뉴 스크롤 방지 */
+body.menu_open {
+    overflow: hidden;
+}
+
+/* 3D Navigation Logo */
+#header .nav_logo_3d {
+    display: none;
+}
+
+@media (max-width: 786px) {
+}
+
+/* ------------------------------ */
+/* 786px 이하 */
+/* ------------------------------ */
+
+@media (max-width: 786px) {
+    /* 기본 헤더 */
+    #header .header_inner {
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* 햄버거 버튼 */
+    #header .header_nav_mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1003;
+    }
+
+    /* 메뉴 활성화 */
+    #header.menu_open {
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        background: transparent;
+        mix-blend-mode: normal;
+        overflow: hidden;
+    }
+
+    #header.menu_open .header_inner {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+    }
+
+    /* 메뉴가 열리면 로고 숨기기 */
+    #header.menu_open .header_logo {
+        display: none;
+    }
+
+    /* 모바일 내비게이션 기본 상태 */
+    #header .header_nav {
+        display: none;
+    }
+
+    /* 모바일 내비게이션 활성화 */
+    #header.menu_open .header_nav {
+        display: block;
+        position: absolute;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        margin: 0;
+        padding: 80px 6.7% 40px;
+        box-sizing: border-box;
+
+        background: #223157;
+
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
+
+        z-index: 1001;
+
+        animation: navPanelOpen 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* 이전 원형 배경 제거 */
+    #header .header_nav::before {
+        display: none;
+    }
+
+    /* 모바일 메인 메뉴 */
+    #header.menu_open .header_menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        gap: 40px;
+
+        position: static;
+        inset: auto;
+
+        width: 100%;
+        height: auto;
+
+        margin: 0;
+        padding: 0;
+
+        background: transparent;
+        list-style: none;
+
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        animation: none;
+    }
+
+    #header.menu_open .header_menu > li {
+        position: static;
+        width: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        text-align: left;
+
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    /* 모바일 메인 메뉴 글씨 */
+    #header.menu_open .header_menu > li > a {
+        display: inline-block;
+
+        font-family: "Pretendard", sans-serif;
+        font-size: clamp(28px, 4.85vw, 38px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.025em;
+
+        padding: 0;
+        color: #fff;
+        white-space: nowrap;
+
+        animation: navTextDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* 모바일 밑줄 제거 */
+    #header.menu_open .header_menu a::before {
+        display: none;
+    }
+
+    /* 아티스트 서브 메뉴 */
+    #header.menu_open .header_submenu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 32px;
+
+        position: static;
+        inset: auto;
+
+        width: 100%;
+        min-width: 0;
+        height: auto;
+
+        margin: 30px 0 16px;
+        padding: 0;
+
+        background: transparent;
+        list-style: none;
+
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+
+    #header.menu_open .header_submenu li {
+        position: static;
+        width: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        text-align: left;
+
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    /* 서브 메뉴 글씨 */
+    #header.menu_open .header_submenu li a {
+        display: inline-block;
+
+        font-family: "Pretendard", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.4;
+
+        padding: 0;
+        color: #aab7d0;
+        white-space: nowrap;
+        text-align: left;
+
+        animation: navTextDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    #header.menu_open .header_submenu li a:hover {
+        opacity: 1;
+        color: #fff;
+    }
+
+    /* ABOUT 등장 */
+    #header.menu_open .header_menu > li:nth-child(1) > a {
+        animation-delay: 0.25s;
+    }
+
+    /* OUR ARTIST 등장 */
+    #header.menu_open .header_menu > li:nth-child(2) > a {
+        animation-delay: 0.33s;
+    }
+
+    /* BTS 등장 */
+    #header.menu_open .header_submenu li:nth-child(1) a {
+        animation-delay: 0.41s;
+    }
+
+    /* TXT 등장 */
+    #header.menu_open .header_submenu li:nth-child(2) a {
+        animation-delay: 0.49s;
+    }
+
+    /* CORTIS 등장 */
+    #header.menu_open .header_submenu li:nth-child(3) a {
+        animation-delay: 0.57s;
+    }
+
+    /* CONTENTS 등장 */
+    #header.menu_open .header_menu > li:nth-child(3) > a {
+        animation-delay: 0.65s;
+    }
+
+    /* 열린 상태의 햄버거 버튼 */
+    #header.menu_open .header_nav_mobile {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+
+        z-index: 1003;
+        pointer-events: auto;
+    }
+
+    #header.menu_open .header_nav_mobile span::before {
+        width: 20px;
+    }
+
+    #header.menu_open .header_nav_mobile span::after {
+        width: 20px;
+    }
+
+    #header.menu_open .header_nav {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+    }
+
+    #header.menu_open .header_menu {
+        flex-shrink: 0;
+    }
+
+    #header.menu_open .nav_logo_3d {
+        display: block;
+        position: relative;
+
+        width: 100%;
+        height: clamp(260px, 50vw, 380px);
+
+        margin-top: auto;
+        margin-bottom: 0;
+
+        flex-shrink: 0;
+        pointer-events: none;
+
+        animation: navTextDown 0.7s ease 0.8s both;
+    }
+
+    #header .nav_logo_3d canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* 직사각형 패널 펼쳐지는 효과 */
+@keyframes navPanelOpen {
+    from {
+        clip-path: inset(0 0 100% 100%);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* 텍스트 위에서 아래로 등장 */
+@keyframes navTextDown {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ------------------------------ */
+/* 480px 이하 */
+/* ------------------------------ */
+
+@media (max-width: 480px) {
+    #header .header_logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #header .header_inner {
+        justify-content: flex-end;
+    }
+}
+
+/* --- header --- */

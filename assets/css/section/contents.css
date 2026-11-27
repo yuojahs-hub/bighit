@@ -1,0 +1,378 @@
+:root {
+    --mainEng-font: "Pretendard";
+    --mainKor-font: "Pretendard";
+}
+
+body {
+    background-color: #000;
+}
+
+a,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+strong,
+em {
+    color: #fff;
+}
+a {
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: var(--subColor600);
+}
+/*  */
+
+#contents .portfolio .view {
+    align-items: end;
+}
+/* Portfolio */
+#contents .portfolio {
+    margin: 100px 0;
+    position: relative;
+    min-height: 100vh;
+    padding: 20px 0;
+}
+
+/* Project Area */
+#contents .project {
+    height: 25vh;
+    min-height: 150px;
+    border-bottom: 1px solid #777;
+
+    display: flex;
+    align-items: center;
+
+    position: relative;
+    padding: 0 4%;
+
+    cursor: pointer;
+
+    /* 링크 기본 스타일 제거 */
+    text-decoration: none;
+    color: #fff;
+}
+
+/* 첫 번째 프로젝트 상단 선 */
+#contents .project:first-of-type {
+    border-top: 1px solid #777;
+}
+
+/* Number */
+#contents .number {
+    font-size: 24px;
+    font-weight: 600;
+    margin-right: 20px;
+}
+#contents .portfolio .project:hover .number {
+    color: var(--subColor600);
+}
+
+/* Project Title */
+#contents .info {
+    flex: 1;
+}
+#contents .info h2 {
+    font-size: clamp(16px, 2vw, 36px);
+    font-weight: 600;
+    transition: all 0.3s;
+}
+#contents .project {
+    transition: all 0.3s;
+}
+#contents .project:hover .info h2 {
+    color: var(--subColor600);
+    transition: all 0.3s;
+}
+#contents .project:hover {
+    padding: 5%;
+}
+/* View More */
+#contents .view {
+    color: var(--subColor600);
+    margin-left: auto;
+
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* Preview Image */
+#contents .preview {
+    position: absolute;
+    width: 480px;
+    height: 270px;
+    right: 20%;
+    top: 50%;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-50%) rotate(8deg) scale(0.8);
+
+    pointer-events: none;
+    z-index: 5;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        visibility 0.4s;
+}
+
+#contents .preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hover Image */
+#contents .project:hover .preview {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(-50%) rotate(8deg) scale(1);
+}
+
+/* ARTIST TAB MENU */
+#contents .artist-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+
+    padding: 50px 0 35px;
+}
+
+/* TAB BUTTON */
+#contents .artist-tab {
+    position: relative;
+
+    background: none;
+    border: none;
+    outline: none;
+
+    color: #777;
+    font-size: 18px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+/* TAB HOVER */
+#contents .artist-tab:hover {
+    color: #fff;
+}
+
+/* ACTIVE TAB */
+#contents .artist-tab.active {
+    color: var(--subColor600);
+}
+
+/* ACTIVE UNDERLINE */
+#contents .artist-tab.active::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+
+    width: 100%;
+    height: 2px;
+
+    background: var(--subColor600);
+}
+
+/* TAB CONTENT */
+#contents .tab-panel {
+    display: none;
+}
+
+#contents .tab-panel.active {
+    display: block;
+}
+
+/* 미디어쿼리 */
+@media (max-width: 768px) {
+    #contents .project {
+        height: auto;
+        min-height: unset;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 20px 4%;
+    }
+    #contents .project:hover .preview {
+        transform: none;
+    }
+    #contents .number {
+        flex-shrink: 0;
+    }
+
+    #contents .preview {
+        position: static;
+        order: 10;
+        flex: 0 0 100%;
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: none;
+    }
+
+    #contents .preview img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    #contents .artist-tabs {
+        gap: 30px;
+        padding: 35px 0 25px;
+    }
+
+    #contents .artist-tab {
+        font-size: 15px;
+    }
+
+    #contents .info h2 {
+        font-size: 14px;
+    }
+}
+
+/* bg_typo */
+.bg_typo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    opacity: 0;
+    transition: opacity 0.65s ease;
+
+    -webkit-mask: url(#typoMask);
+    mask: url(#typoMask);
+}
+
+.bg_typo.active {
+    opacity: 1;
+}
+
+/* bg_track */
+.bg_typo .bg_track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    width: max-content;
+    animation: typoMove 20s linear infinite;
+}
+/* bg_loop */
+.bg_typo .bg_loop {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-around;
+    min-width: 110vw;
+}
+
+/* bg_group */
+.bg_typo .bg_group {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    gap: 1vw;
+    padding-right: 4vw;
+
+    transform: rotate(-12deg);
+}
+
+/* typo text */
+.bg_typo span {
+    display: block;
+    font-size: 18vw;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    white-space: nowrap;
+
+    color: #00c5e5;
+    animation: typoColor 10s ease-in-out infinite;
+
+    background: linear-gradient(
+        110deg,
+        #151515 0%,
+        currentColor 20%,
+        currentColor 80%,
+        #151515 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px rgba(20, 20, 20, 0.5);
+}
+
+/* 가로 무한 반복 */
+@keyframes typoMove {
+    from {
+        transform: translate(0, -50%);
+    }
+
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* 색상 변화 */
+@keyframes typoColor {
+    0%,
+    100% {
+        color: #00c5e5;
+    }
+
+    25% {
+        color: #2848db;
+    }
+
+    50% {
+        color: #9457e8;
+    }
+
+    75% {
+        color: #e53838;
+    }
+}
+/* ARTIST TAB 배경 타이포 공통 설정 */
+#contents .tab-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+#contents .tab-panel .bg_typo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    pointer-events: none;
+}
+
+#contents .tab-panel .portfolio {
+    position: relative;
+    z-index: 1;
+}
+
+/* 768px 이하에서는 물결 배경 효과 숨기기 */
+@media (max-width: 768px) {
+    #contents .bg_typo {
+        display: none;
+    }
+}

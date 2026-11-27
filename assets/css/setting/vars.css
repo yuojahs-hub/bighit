@@ -1,0 +1,46 @@
+:root {
+    --mainEng-font: "Teko";
+    --mainKor-font: "Pretendard";
+
+    --mainBg: #0c1faa;
+    --mainBg100: #717bc3;
+
+    --subColor100: #373e7e;
+    --subColor200: #282c57;
+    --subColor300: #8b8eac;
+    --subColor400: #5560c0;
+    --subColor500: #656aa1;
+    --subColor600: #475cff;
+
+    --cortisBg: #88b191;
+    --cortis100: #8e5c52;
+    --cortis200: #dae1e9;
+    --cortis300: #488188;
+    --cortis400: #d2898b;
+    --cortis500: #3e3c47;
+
+    --txtBg: #0b1b4a;
+    --txtBg100: #679ec9;
+
+    --btsBg: #b68cff;
+
+    /* 기본 폰트 설정 */
+    font-family: var(--mainEng-font), var(--mainKor-font);
+    font-size: 16px;
+
+    /* 폰트를 부드럽게 렌더링하기 위한 속성  */
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* 아이폰 가로 모드에서 글씨 확대 금지 */
+    -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 800px) {
+    :root {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

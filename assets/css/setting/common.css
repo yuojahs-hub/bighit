@@ -1,0 +1,102 @@
+.container {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.custom_cursor {
+    display: none;
+}
+
+/* 미디어 쿼리 */
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    *,
+    *::before,
+    *::after {
+        cursor: none;
+    }
+    .custom_cursor {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #fff;
+        mix-blend-mode: difference;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 99999;
+        opacity: 0;
+
+        transition:
+            width 0.3s ease,
+            height 0.3s ease,
+            opacity 0.2s ease;
+    }
+
+    .custom_cursor.active {
+        width: 60px;
+        height: 60px;
+    }
+}
+@media (max-width: 768px) {
+    .container {
+        width: 73.96%;
+    }
+}
+@media (max-width: 480px) {
+}
+
+/* CUSTOM CURSOR */
+.custom_cursor {
+    display: none;
+}
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    html.custom_cursor_enabled,
+    html.custom_cursor_enabled *,
+    html.custom_cursor_enabled *:hover,
+    html.custom_cursor_enabled *:active,
+    html.custom_cursor_enabled *:focus,
+    html.custom_cursor_enabled *::before,
+    html.custom_cursor_enabled *::after {
+        cursor: none;
+    }
+
+    .custom_cursor {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+
+        background-color: #fff;
+        mix-blend-mode: difference;
+
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 999999;
+        opacity: 0;
+
+        transition:
+            width 0.3s ease,
+            height 0.3s ease,
+            opacity 0.15s ease;
+    }
+
+    /* 링크 및 버튼 호버 */
+    .custom_cursor.active {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* 이미지 기본 드래그 방지 */
+    html.custom_cursor_enabled img {
+        -webkit-user-drag: none;
+    }
+}
+/* // CUSTOM CURSOR */
