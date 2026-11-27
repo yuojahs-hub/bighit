@@ -1,170 +1,212 @@
-/* Banner Typography */
-const typoBg = document.querySelector("#banner .typo_bg");
-const originalLines = Array.from(typoBg.children).map((line) => line.cloneNode(true));
+/* Banner Scanline Typography */
+(function () {
+    const scanlineGroup = document.querySelector("#bighitScanlines");
 
-/* 랜덤 타이포그래피 스타일 */
-function randomTypoStyle(span) {
-    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    if (!scanlineGroup) return;
 
-    const isKorean = /[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(span.textContent);
+    const svgNS = "http://www.w3.org/2000/svg";
 
-    /* 폰트 랜덤 설정 */
-    const font = isKorean
-        ? '"Pretendard", sans-serif'
-        : pick(['"Pretendard", sans-serif', '"Teko", sans-serif']);
+    /* 가로선 모션 설정값 */
+    const settings = {
+        width: 1200,
+        height: 540,
 
-    /* 폰트 크기 랜덤 설정 */
-    const size = font.includes("Teko")
-        ? pick(["clamp(26px, 2.5vw, 42px)", "clamp(30px, 3vw, 48px)", "clamp(34px, 3.3vw, 54px)"])
-        : pick(["clamp(18px, 1.6vw, 28px)", "clamp(22px, 2vw, 34px)", "clamp(26px, 2.3vw, 40px)"]);
+        spacing: 8,
+        maxThickness: 8.6,
+        minThickness: 0.6,
 
-    /* 폰트 굵기 랜덤 설정 */
-    const weight = pick([300, 400, 500, 600, 700]);
+        duration: 5000,
+        stagger: 15,
 
-    /* 색상 및 투명도 랜덤 설정 */
-    /* 색상 및 투명도 랜덤 설정 */
-    /* 색상 랜덤 설정 */
-    const color = pick([
-        "#535358",
-        "#8e90a3",
-        "#2b2b2e",
-        "#0c0d1a",
-        "#8b8eac",
-        "#191a20",
-        "#1b1b1f",
-        "#5c5c5c",
-        "#dae1e9",
-        "#3e3c47",
-        "#0b1b4a",
-    ]);
+        hold: 800,
+        shrink: 600,
+        wait: 200,
+        expand: 600,
+    };
 
-    span.style.setProperty("--typo-font", font);
-    span.style.setProperty("--typo-size", size);
-    span.style.setProperty("--typo-weight", weight);
-    span.style.setProperty("--typo-color", color);
-}
+    const lines = [];
 
-/* 배너 텍스트 자동 채우기 */
-function fillTypoBackground() {
-    typoBg.innerHTML = "";
+    /* 기존 가로선 초기화 */
+    scanlineGroup.replaceChildren();
 
-    const gap = parseFloat(getComputedStyle(typoBg).rowGap) || 0;
+    /* SVG 가로선 생성 */
+    for (let y = settings.spacing / 2; y < settings.height; y += settings.spacing) {
+        const line = document.createElementNS(svgNS, "rect");
 
-    let totalHeight = 0;
-    let i = 0;
+        line.setAttribute("x", 0);
+        line.setAttribute("width", settings.width);
+        line.setAttribute("y", y - settings.maxThickness / 2);
+        line.setAttribute("height", settings.maxThickness);
+        line.setAttribute("shape-rendering", "crispEdges");
 
-    while (totalHeight < typoBg.clientHeight + 120) {
-        const line = originalLines[i % originalLines.length].cloneNode(true);
+        scanlineGroup.appendChild(line);
 
-        const tracks = Array.from(line.children);
+        lines.push({
+            element: line,
+            centerY: y,
+        });
+    }
 
-        /* 기존 복제 트랙 제거 */
-        tracks.slice(1).forEach((track) => track.remove());
+    /* 애니메이션 시작 시간 */
+    let elapsed = 0;
+    let lastTime = null;
 
-        typoBg.appendChild(line);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-        const track = line.firstElementChild;
+    /* 부드러운 가속 및 감속 */
+    function easeInOut(t) {
+        return -(Math.cos(Math.PI * t) - 1) / 2;
+    }
 
-        /* 문구별 랜덤 스타일 적용 */
-        track.querySelectorAll("span").forEach(randomTypoStyle);
+    /* 가로선 두께 애니메이션 */
+    /* 부드러운 가속 및 감속 */
+    function easeInOut(t) {
+        return -(Math.cos(Math.PI * t) - 1) / 2;
+    }
 
-        const originalTrack = track.cloneNode(true);
-
-        /* 가로 화면도 빈 공간 없이 채우기 */
-        while (track.getBoundingClientRect().width < typoBg.clientWidth) {
-            Array.from(originalTrack.children).forEach((span) => {
-                const clone = span.cloneNode(true);
-
-                randomTypoStyle(clone);
-                track.appendChild(clone);
-            });
+    /* 가로선 두께 애니메이션 */
+    function animate(now) {
+        if (lastTime !== null) {
+            elapsed += Math.min(now - lastTime, 50);
         }
 
-        /* 끊김 없는 무한 반복 */
-        line.appendChild(track.cloneNode(true));
+        lastTime = now;
 
-        /* 실제 줄 높이 누적 */
-        totalHeight += line.getBoundingClientRect().height + gap;
+        const totalStagger = (lines.length - 1) * settings.stagger;
 
-        i++;
+        const expandStart = settings.hold + totalStagger + settings.shrink + settings.wait;
+
+        const cycleDuration = Math.max(
+            settings.duration,
+            expandStart + totalStagger + settings.expand + 300,
+        );
+
+        const cycle = elapsed % cycleDuration;
+
+        lines.forEach((line, index) => {
+            /* 위에서 아래로 */
+            const shrinkTime = cycle - settings.hold - index * settings.stagger;
+
+            /* 아래에서 위로 */
+            const reverseIndex = lines.length - 1 - index;
+
+            const expandTime = cycle - expandStart - reverseIndex * settings.stagger;
+
+            let thickness = settings.maxThickness;
+
+            if (!reduceMotion.matches) {
+                const shrinkProgress = easeInOut(
+                    Math.max(0, Math.min(shrinkTime / settings.shrink, 1)),
+                );
+
+                const expandProgress = easeInOut(
+                    Math.max(0, Math.min(expandTime / settings.expand, 1)),
+                );
+
+                const range = settings.maxThickness - settings.minThickness;
+
+                thickness = settings.maxThickness - range * shrinkProgress + range * expandProgress;
+            }
+
+            /* 가로선 중심 위치 고정 */
+            line.element.setAttribute("y", (line.centerY - thickness / 2).toFixed(3));
+
+            line.element.setAttribute("height", thickness.toFixed(3));
+        });
+
+        requestAnimationFrame(animate);
     }
-}
 
-/* 폰트 로딩 완료 후 실행 */
-document.fonts.ready.then(() => {
-    fillTypoBackground();
+    requestAnimationFrame(animate);
+})();
 
-    let lastWidth = typoBg.clientWidth;
-    let lastHeight = typoBg.clientHeight;
-
-    /* 화면 크기 변경 시 배경 재생성 */
-    const typoResize = new ResizeObserver(() => {
-        const width = typoBg.clientWidth;
-        const height = typoBg.clientHeight;
-
-        if (width === lastWidth && height === lastHeight) return;
-
-        lastWidth = width;
-        lastHeight = height;
-
-        fillTypoBackground();
-    });
-
-    typoResize.observe(typoBg);
-});
-
-/* --- Banner Typography --- */
+/* --- Banner Scanline Typography --- */
 
 /* Number Counter */
-const counters = document.querySelectorAll(".count");
+(function () {
+    const numberCounters = document.querySelectorAll(".count");
 
-const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const target = Number(counter.dataset.target);
-                const duration = 2500;
-                const startTime = performance.now();
+    if (!numberCounters.length) return;
 
-                function update(now) {
-                    const progress = Math.min((now - startTime) / duration, 1);
+    const counterObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = Number(counter.dataset.target);
 
-                    const eased = 1 - Math.pow(1 - progress, 4);
-                    const current = Math.floor(target * eased);
+                    const duration = 2500;
+                    const startTime = performance.now();
 
-                    counter.textContent = current;
+                    function update(now) {
+                        const progress = Math.min((now - startTime) / duration, 1);
 
-                    if (progress < 1) {
-                        requestAnimationFrame(update);
-                    } else {
-                        counter.textContent = target;
+                        const eased = 1 - Math.pow(1 - progress, 4);
+                        const current = Math.floor(target * eased);
+
+                        counter.textContent = current;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        } else {
+                            counter.textContent = target;
+                        }
                     }
+
+                    requestAnimationFrame(update);
+
+                    counterObserver.unobserve(counter);
                 }
+            });
+        },
+        {
+            threshold: 0.5,
+        },
+    );
 
-                requestAnimationFrame(update);
-
-                observer.unobserve(counter);
-            }
-        });
-    },
-    {
-        threshold: 0.5,
-    },
-);
-
-counters.forEach((counter) => {
-    observer.observe(counter);
-});
+    numberCounters.forEach((counter) => {
+        counterObserver.observe(counter);
+    });
+})();
 
 /* --- Number Counter --- */
 
-/* Header Mobile Menu */
-const headerNav = document.querySelector(".header_nav");
-const headerToggle = document.querySelector("#headerToggle");
+/* Brand Micro Text Track */
+(function () {
+    const micro = document.querySelector("#banner .brand_micro");
+    const track = document.querySelector("#banner .brand_micro_track");
 
-headerToggle.addEventListener("click", () => {
-    headerNav.classList.toggle("show");
-});
+    if (!micro || !track || !track.firstElementChild) return;
 
-/* --- Header Mobile Menu --- */
+    const original = track.firstElementChild.cloneNode(true);
+
+    function fillMicroTrack() {
+        if (micro.clientWidth === 0) return;
+
+        track.replaceChildren();
+
+        /* 화면 너비만큼 텍스트 자동 생성 */
+        do {
+            track.appendChild(original.cloneNode(true));
+        } while (track.scrollWidth < micro.clientWidth);
+
+        /* 끊김 없는 무한 반복을 위한 복제 */
+        const items = Array.from(track.children);
+
+        items.forEach((item) => {
+            track.appendChild(item.cloneNode(true));
+        });
+    }
+
+    /* 폰트 로딩 후 실행 */
+    document.fonts.ready.then(() => {
+        fillMicroTrack();
+
+        /* 화면 크기 변경 시 자동 재배치 */
+        const microObserver = new ResizeObserver(fillMicroTrack);
+
+        microObserver.observe(micro);
+    });
+})();
+
+/* --- Brand Micro Text Track --- */
