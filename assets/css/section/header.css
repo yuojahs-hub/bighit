@@ -289,7 +289,7 @@ body.menu_open {
         padding: 80px 6.7% 40px;
         box-sizing: border-box;
 
-        background: #223157;
+        background-color: #000;
 
         opacity: 1;
         visibility: visible;
@@ -366,7 +366,9 @@ body.menu_open {
 
         animation: navTextDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-
+    #header.menu_open .header_menu > li > a:hover {
+        color: var(--mainBg);
+    }
     /* 모바일 밑줄 제거 */
     #header.menu_open .header_menu a::before {
         display: none;
@@ -431,11 +433,12 @@ body.menu_open {
         text-align: left;
 
         animation: navTextDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+        transition: all 0.3s;
     }
 
     #header.menu_open .header_submenu li a:hover {
         opacity: 1;
-        color: #fff;
+        color: var(--mainBg);
     }
 
     /* ABOUT 등장 */
@@ -561,3 +564,28 @@ body.menu_open {
 }
 
 /* --- header --- */
+
+/* HEADER 빈 공간은 클릭 통과 */
+#header,
+#header .header_inner {
+    pointer-events: none;
+}
+
+/* 로고 클릭 가능 */
+#header .header_logo a {
+    pointer-events: auto;
+}
+
+/* PC / 모바일 내비게이션 클릭 가능 */
+#header .header_nav {
+    pointer-events: auto;
+}
+
+#header .header_nav a {
+    pointer-events: auto;
+}
+
+/* 모바일 햄버거 버튼 클릭 가능 */
+#header .header_nav_mobile {
+    pointer-events: auto;
+}

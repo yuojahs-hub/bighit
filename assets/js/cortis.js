@@ -1,6 +1,18 @@
 var swiper = new Swiper(".hero", {
     effect: "cards",
     grabCursor: true,
+
+    loop: false,
+    rewind: true,
+    initialSlide: 0,
+    speed: 800,
+
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+        reverseDirection: false,
+    },
 });
 
 //awards

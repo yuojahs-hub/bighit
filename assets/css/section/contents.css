@@ -20,6 +20,7 @@ strong,
 em {
     color: #fff;
 }
+
 a {
     transition: all 0.3s;
 }
@@ -27,14 +28,16 @@ a {
 a:hover {
     color: var(--subColor600);
 }
-/*  */
 
+/* CONTENTS */
 #contents {
     margin-top: clamp(4rem, 5vw, 6rem);
 }
+
 #contents .portfolio .view {
     align-items: end;
 }
+
 /* Portfolio */
 #contents .portfolio {
     margin: 100px 0;
@@ -47,7 +50,6 @@ a:hover {
 #contents .project {
     height: 25vh;
     min-height: 150px;
-    border-bottom: 1px solid #777;
 
     display: flex;
     align-items: center;
@@ -57,14 +59,74 @@ a:hover {
 
     cursor: pointer;
 
-    /* 링크 기본 스타일 제거 */
     text-decoration: none;
     color: #fff;
+
+    transition: padding 0.3s;
 }
 
-/* 첫 번째 프로젝트 상단 선 */
-#contents .project:first-of-type {
-    border-top: 1px solid #777;
+/* 프로젝트 가로선 */
+
+/* 모든 프로젝트의 아래쪽 선 */
+#contents .project::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 1px;
+    background: #777;
+
+    transform: scaleX(1);
+    transform-origin: left;
+
+    transition: transform 0.45s ease;
+    pointer-events: none;
+}
+
+/* 첫 번째 프로젝트에만 위쪽 선 */
+#contents .portfolio > .project:first-child::before,
+#contents .portfolio > .content_inner:first-child .project:first-child::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 1px;
+    background: #777;
+
+    transform: scaleX(1);
+    transform-origin: left;
+
+    transition: transform 0.45s ease;
+    pointer-events: none;
+}
+
+/* 기존 선 퇴장: 오른쪽에서 왼쪽 */
+#contents .tab-panel.line-leaving .project::after,
+#contents .tab-panel.line-leaving .portfolio > .project:first-child::before,
+#contents
+    .tab-panel.line-leaving
+    .portfolio
+    > .content_inner:first-child
+    .project:first-child::before {
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+/* 새 선 등장 준비: 왼쪽에서 시작 */
+#contents .tab-panel.line-entering .project::after,
+#contents .tab-panel.line-entering .portfolio > .project:first-child::before,
+#contents
+    .tab-panel.line-entering
+    .portfolio
+    > .content_inner:first-child
+    .project:first-child::before {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: none;
 }
 
 /* Number */
@@ -73,6 +135,7 @@ a:hover {
     font-weight: 600;
     margin-right: 20px;
 }
+
 #contents .portfolio .project:hover .number {
     color: var(--subColor600);
 }
@@ -81,21 +144,21 @@ a:hover {
 #contents .info {
     flex: 1;
 }
+
 #contents .info h2 {
     font-size: clamp(16px, 2vw, 36px);
     font-weight: 600;
-    transition: all 0.3s;
+    transition: color 0.3s;
 }
-#contents .project {
-    transition: all 0.3s;
-}
+
 #contents .project:hover .info h2 {
     color: var(--subColor600);
-    transition: all 0.3s;
 }
+
 #contents .project:hover {
     padding: 5%;
 }
+
 /* View More */
 #contents .view {
     color: var(--subColor600);
@@ -141,54 +204,128 @@ a:hover {
     transform: translateY(-50%) rotate(8deg) scale(1);
 }
 
+/* CONTENTS HEADER */
+#contents .contents-header {
+    width: 100%;
+}
+
+/* CONTENTS TITLE */
+#contents .contents-title {
+    padding: 25px 0;
+}
+
+#contents .contents-title h1 {
+    margin: 0;
+
+    font-size: clamp(42px, 7vw, 90px);
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 1.1;
+
+    color: #fff;
+}
+
+/* ARTIST FILTER */
+#contents .artist-filter {
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+    padding: 25px 0;
+}
+
+/* FILTER LABEL */
+#contents .filter-label {
+    flex-shrink: 0;
+
+    color: #fff;
+    font-size: clamp(20px, 2.5vw, 30px);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+}
+
 /* ARTIST TAB MENU */
 #contents .artist-tabs {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 60px;
+    justify-content: flex-end;
 
-    padding: 50px 0 35px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 /* TAB BUTTON */
 #contents .artist-tab {
     position: relative;
 
-    background: none;
-    border: none;
-    outline: none;
+    background: transparent;
+    border: 1px solid #777;
+    border-radius: 50px;
 
-    color: #777;
-    font-size: 18px;
-    font-weight: 600;
+    padding: 8px 20px;
+
+    color: #aaa;
+    font-size: 16px;
+    font-weight: 500;
 
     cursor: pointer;
-    transition: color 0.3s;
+
+    transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 /* TAB HOVER */
 #contents .artist-tab:hover {
     color: #fff;
+    border-color: #fff;
 }
 
 /* ACTIVE TAB */
 #contents .artist-tab.active {
-    color: var(--subColor600);
+    color: #000;
+    background: #fff;
+    border-color: #fff;
 }
 
-/* ACTIVE UNDERLINE */
+/* 기존 밑줄 제거 */
 #contents .artist-tab.active::after {
-    content: "";
+    display: none;
+}
 
-    position: absolute;
-    left: 0;
-    bottom: -10px;
+/* MOBILE */
+@media (max-width: 768px) {
+    #contents .contents-title {
+        padding: 20px 0;
+    }
 
-    width: 100%;
-    height: 2px;
+    #contents .contents-title h1 {
+        font-size: clamp(38px, 10vw, 60px);
+    }
 
-    background: var(--subColor600);
+    #contents .artist-filter {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 18px;
+        padding: 20px 0;
+    }
+
+    #contents .filter-label {
+        font-size: 20px;
+    }
+
+    #contents .artist-tabs {
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    #contents .artist-tab {
+        padding: 7px 16px;
+        font-size: 14px;
+    }
 }
 
 /* TAB CONTENT */
@@ -200,58 +337,7 @@ a:hover {
     display: block;
 }
 
-/* 미디어쿼리 */
-@media (max-width: 768px) {
-    #contents .project {
-        height: auto;
-        min-height: unset;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        padding: 20px 4%;
-    }
-    #contents .project:hover .preview {
-        transform: none;
-    }
-    #contents .number {
-        flex-shrink: 0;
-    }
-
-    #contents .preview {
-        position: static;
-        order: 10;
-        flex: 0 0 100%;
-        width: 100%;
-        height: auto;
-        margin-top: 20px;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        transition: none;
-    }
-
-    #contents .preview img {
-        display: block;
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
-
-    #contents .artist-tabs {
-        gap: 30px;
-        padding: 35px 0 25px;
-    }
-
-    #contents .artist-tab {
-        font-size: 15px;
-    }
-
-    #contents .info h2 {
-        font-size: 14px;
-    }
-}
-
-/* bg_typo */
+/* BG TYPO */
 .bg_typo {
     position: absolute;
     inset: 0;
@@ -269,7 +355,7 @@ a:hover {
     opacity: 1;
 }
 
-/* bg_track */
+/* BG TRACK */
 .bg_typo .bg_track {
     position: absolute;
     top: 50%;
@@ -278,7 +364,8 @@ a:hover {
     width: max-content;
     animation: typoMove 20s linear infinite;
 }
-/* bg_loop */
+
+/* BG LOOP */
 .bg_typo .bg_loop {
     display: flex;
     flex-shrink: 0;
@@ -286,7 +373,7 @@ a:hover {
     min-width: 110vw;
 }
 
-/* bg_group */
+/* BG GROUP */
 .bg_typo .bg_group {
     display: flex;
     flex-direction: column;
@@ -298,7 +385,7 @@ a:hover {
     transform: rotate(-12deg);
 }
 
-/* typo text */
+/* TYPO TEXT */
 .bg_typo span {
     display: block;
     font-size: 18vw;
@@ -354,6 +441,7 @@ a:hover {
         color: #e53838;
     }
 }
+
 /* ARTIST TAB 배경 타이포 공통 설정 */
 #contents .tab-panel {
     position: relative;
@@ -373,8 +461,66 @@ a:hover {
     z-index: 1;
 }
 
-/* 768px 이하에서는 물결 배경 효과 숨기기 */
+/* 모바일 */
 @media (max-width: 768px) {
+    #contents .project {
+        height: auto;
+        min-height: unset;
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        padding: 20px 4%;
+    }
+
+    #contents .project:hover {
+        padding: 20px 4%;
+    }
+
+    #contents .project:hover .preview {
+        transform: none;
+    }
+
+    #contents .number {
+        flex-shrink: 0;
+    }
+
+    #contents .preview {
+        position: static;
+        order: 10;
+        flex: 0 0 100%;
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: none;
+    }
+
+    #contents .preview img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    #contents .artist-tabs {
+        gap: 8px;
+        padding: 35px 0 25px;
+    }
+
+    #contents .artist-tab {
+        padding: 7px 16px;
+        font-size: 13px;
+    }
+
+    #contents .info h2 {
+        font-size: 14px;
+    }
+
     #contents .bg_typo {
         display: none;
     }

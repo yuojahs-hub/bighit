@@ -67,6 +67,16 @@ var swiper = new Swiper(".hero", {
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: "auto",
+
+    loop: true,
+    speed: 800,
+
+    autoplay: {
+        delay: 1800,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+    },
+
     coverflowEffect: {
         rotate: 50,
         stretch: 0,
@@ -74,6 +84,7 @@ var swiper = new Swiper(".hero", {
         modifier: 1,
         slideShadows: true,
     },
+
     pagination: {
         el: ".swiper-pagination",
     },

@@ -1,6 +1,6 @@
 /* footer */
 #footer {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 #footer .footer_inner {
     display: flex;
@@ -11,7 +11,7 @@
     border-bottom: 1px solid #fff;
 }
 #footer .footer_left p {
-    padding-bottom: 10px;
+    padding-bottom: 1rem;
 }
 #footer .footer_left span {
     font-weight: 700;
@@ -20,7 +20,7 @@
     text-align: right;
 }
 #footer .footer_right p {
-    padding-bottom: 10px;
+    padding-bottom: 1rem;
 }
 #footer .footer_logo {
     width: 355px;

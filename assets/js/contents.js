@@ -17,25 +17,37 @@ const water = {
     scale: 0,
 };
 
-// ARTIST TAB 전환
+// 탭 전환 중복 클릭 방지
+let isSwitching = false;
+
+// 애니메이션 시간
+const lineDuration = 0.45;
+
+// ARTIST TAB 전환 애니메이션
 tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
+        // 애니메이션 중이거나 현재 활성화된 탭이면 종료
+        if (isSwitching || tab.classList.contains("active")) return;
+
+        isSwitching = true;
+
+        // 현재 패널과 다음 패널
+        const currentPanel = document.querySelector(".tab-panel.active");
+        const target = tab.dataset.tab;
+        const nextPanel = document.getElementById(target);
+
+        if (!currentPanel || !nextPanel) {
+            isSwitching = false;
+            return;
+        }
+
         // 모든 탭 비활성화
         tabs.forEach((item) => {
             item.classList.remove("active");
         });
 
-        // 모든 콘텐츠 숨기기
-        panels.forEach((panel) => {
-            panel.classList.remove("active");
-        });
-
         // 클릭한 탭 활성화
         tab.classList.add("active");
-
-        // 해당 콘텐츠 보여주기
-        const target = tab.dataset.tab;
-        document.getElementById(target).classList.add("active");
 
         // 모든 배경 타이포 초기화
         bgTypos.forEach((bgTypo) => {
@@ -48,6 +60,90 @@ tabs.forEach((tab) => {
             duration: 0.5,
             ease: "power2.inOut",
             overwrite: "auto",
+        });
+
+        // 기존 패널의 프로젝트 글자
+        const currentTextElements = currentPanel.querySelectorAll(
+            ".project .number, .project .info, .project .view",
+        );
+
+        // 기존 선 퇴장 시작
+        currentPanel.classList.add("line-leaving");
+
+        // 기존 글자도 동시에 아래로 내려가며 사라짐
+        gsap.to(currentTextElements, {
+            autoAlpha: 0,
+            y: 30,
+
+            duration: lineDuration,
+            ease: "power2.in",
+
+            overwrite: "auto",
+        });
+
+        // 선과 글자 퇴장이 끝나면 다음 패널로 전환
+        gsap.delayedCall(lineDuration, () => {
+            // 기존 패널 비활성화
+            currentPanel.classList.remove("active", "line-leaving");
+
+            // 기존 패널의 글자 스타일 초기화
+            gsap.set(currentTextElements, {
+                clearProps: "opacity,visibility,transform",
+            });
+
+            // 기존 패널 투명도 초기화
+            gsap.set(currentPanel, {
+                clearProps: "opacity",
+            });
+
+            // 새 패널 활성화
+            nextPanel.classList.add("active");
+
+            gsap.set(nextPanel, {
+                opacity: 1,
+            });
+
+            // 새 패널의 프로젝트 글자
+            const textElements = nextPanel.querySelectorAll(
+                ".project .number, .project .info, .project .view",
+            );
+
+            // 글자를 아래쪽에 숨겨두기
+            gsap.set(textElements, {
+                autoAlpha: 0,
+                y: 30,
+            });
+
+            // 새 선 등장 준비
+            nextPanel.classList.add("line-entering");
+
+            // 브라우저가 초기 선 상태를 먼저 적용하도록 함
+            nextPanel.offsetWidth;
+
+            // 왼쪽에서 오른쪽으로 선 등장
+            nextPanel.classList.remove("line-entering");
+
+            // 글자 아래에서 위로 순차 등장
+            if (textElements.length > 0) {
+                gsap.to(textElements, {
+                    autoAlpha: 1,
+                    y: 0,
+
+                    duration: 0.65,
+                    stagger: 0.08,
+                    ease: "power3.out",
+
+                    overwrite: "auto",
+
+                    clearProps: "opacity,visibility,transform",
+
+                    onComplete: () => {
+                        isSwitching = false;
+                    },
+                });
+            } else {
+                isSwitching = false;
+            }
         });
     });
 });
@@ -95,6 +191,9 @@ bgTypos.forEach((bgTypo) => {
 
 // 불규칙한 물방울 형태 생성
 gsap.ticker.add((time) => {
+    // SVG 요소가 없으면 실행하지 않음
+    if (!waterShape || !waterPosition || !waterSpread) return;
+
     const points = [];
     const pointCount = 24;
 
@@ -125,7 +224,7 @@ gsap.ticker.add((time) => {
     const last = points[points.length - 1];
 
     let path = `M ${(last.x + first.x) / 2}
-                    ${(last.y + first.y) / 2}`;
+                ${(last.y + first.y) / 2}`;
 
     points.forEach((point, i) => {
         const next = points[(i + 1) % points.length];

@@ -320,11 +320,16 @@ body {
 .album_item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 14.0625vw;
     border-bottom: 0.052083vw solid var(--cortisBg);
     cursor: pointer;
 }
-
+.album_group {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
 .album_item:nth-child(1) {
     border-top: 0.052083vw solid var(--cortisBg);
 }
@@ -346,18 +351,23 @@ body {
 
 .album_item p {
     font-size: 1.667vw;
-    color: #000;
     white-space: nowrap;
     transition: color 0.4s ease;
 }
-
+.album_item p.album_sub_color {
+    color: #858585;
+}
+.album_item p.album_hover {
+    color: #000;
+    font-size: 2.444vw;
+}
 .album_item:hover img {
     width: 10.15625vw;
     margin-right: 2.34375vw;
     opacity: 1;
 }
 
-.album_item:hover p {
+.album_item:hover .album_hover {
     color: var(--cortisBg);
 }
 /* //album */
