@@ -8,6 +8,7 @@
 
     background: transparent;
     mix-blend-mode: difference;
+    font-family: var(--mainKor-font);
 }
 
 #header .header_inner {

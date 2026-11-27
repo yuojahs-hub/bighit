@@ -1,5 +1,5 @@
 body {
-    background-color: #000;
+    background-color: var(--txtBg);
 }
 
 a,
@@ -15,23 +15,11 @@ strong {
     color: #fff;
 }
 
-#header .header {
-    background-color: var(--txtBg);
-}
-#header .txtlogo {
-    padding: clamp(8px, 1.3542vw, 26px);
-}
-#header .txtlogo img {
-    width: 6.1458vw;
-    height: 3.125vw;
-    aspect-ratio: 2 / 1;
-}
-/* // header */
-
 /* banner */
 #banner {
     width: 100%;
     height: 45vw;
+    margin-top: clamp(4rem, 5vw, 6rem);
     background-color: var(--txtBg);
 }
 #banner .banner {
@@ -169,6 +157,7 @@ strong {
 
 #member {
     padding-bottom: 100px;
+    background-color: #000;
 }
 #member .member-scroll {
     position: relative;
@@ -381,6 +370,8 @@ strong {
 
     padding-top: 100px;
     box-sizing: border-box;
+
+    background-color: #000;
 }
 
 #discography .discography_top {
@@ -457,6 +448,8 @@ strong {
     padding: 5.208333vw 0;
     position: relative;
     width: 100%;
+
+    background-color: #000;
 }
 
 .awardReveal {
@@ -550,6 +543,10 @@ strong {
 }
 
 /* footer */
+
+#footer {
+    background-color: #000;
+}
 
 #footer .group_logo {
     padding: clamp(20px, 3.91vw, 75px) 0;
