@@ -29,6 +29,9 @@ a:hover {
 }
 /*  */
 
+#contents {
+    margin-top: clamp(4rem, 5vw, 6rem);
+}
 #contents .portfolio .view {
     align-items: end;
 }

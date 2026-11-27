@@ -1,5 +1,6 @@
 /* header */
 #header {
+    font-family: var(--mainKor-font);
     position: fixed;
     top: 0;
     left: 0;
@@ -8,7 +9,6 @@
 
     background: transparent;
     mix-blend-mode: difference;
-    font-family: var(--mainKor-font);
 }
 
 #header .header_inner {
